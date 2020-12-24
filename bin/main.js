@@ -22,6 +22,18 @@ program
     inquirerFn().then(answers => {
       downloadFn(answers, dirname);
     });
-  })
+  });
+
+  // 如果输入没有注册的命令,输出帮助提示
+program.arguments('<command>').action(cmd => {
+program.outputHelp();
+console.log(' ');
+console.log(`error: unknown option '${cmd}'`);
+});
+program.parse(process.argv);
+// 如果没写参数,输出帮助提示
+if (!process.argv.slice(2).length) {
+program.outputHelp();
+}
 
 
