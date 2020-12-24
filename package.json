@@ -1,5 +1,5 @@
 {
-  "name": "create-app-cli",
+  "name": "super-cli",
   "version": "1.0.0",
   "description": "第一个cli",
   "main": "index.js",
