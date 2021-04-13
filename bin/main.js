@@ -4,11 +4,11 @@
 const { program } = require('commander');
 const fs = require(`fs`);
 const chalk = require('chalk');
-const package = require('../package.json');
+const version = require('../package.json');
 const { downloadFn, inquirerFn } = require('../lib/create');
 
 
-program.version(package.version, '-v,--version');
+program.version(version.version, '-v,--version');
 program.parse(process.argv);
 program
   .command('init <dirname>')
