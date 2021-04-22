@@ -8,7 +8,8 @@ const chalk = require('chalk');
 const version = require('../package.json');
 const { downloadFn, inquirerFn } = require('../lib/create');
 const { newComponent } = require('../lib/new');
-
+const ora = require(`ora`);
+const oraInstance = ora();
 
 program.version(version.version, '-v,--version');
 program.parse(process.argv);
@@ -16,10 +17,10 @@ program
   .command('init <dirname>')
   .description('create a new project')
   .action(dirname => {
-    console.log(dirname)
     // 命令init触发时的回掉函数
     if (fs.existsSync(dirname)) {
-      return console.log(chalk.red(`dirname ${dirname} is exist`));
+      oraInstance.fail('init dirname 已存在');
+      return;
     }
     inquirerFn().then(answers => {
       downloadFn(answers, dirname);
@@ -29,9 +30,6 @@ program
 program.command('new <dirname>')
   .description('create a new component')
   .action(async dirname => {
-    if (fs.existsSync(dirname)) {
-      return console.log(chalk.red(`dirname ${dirname} is exist`));
-    }
     await newComponent(dirname)
 });
 
