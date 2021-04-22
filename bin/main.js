@@ -2,10 +2,12 @@
 
 // 开始处理命令
 const { program } = require('commander');
+const inquirer = require('inquirer');
 const fs = require(`fs`);
 const chalk = require('chalk');
 const version = require('../package.json');
 const { downloadFn, inquirerFn } = require('../lib/create');
+const { newComponent } = require('../lib/new');
 
 
 program.version(version.version, '-v,--version');
@@ -24,16 +26,25 @@ program
     });
   });
 
-  // 如果输入没有注册的命令,输出帮助提示
+program.command('new <dirname>')
+  .description('create a new component')
+  .action(async dirname => {
+    if (fs.existsSync(dirname)) {
+      return console.log(chalk.red(`dirname ${dirname} is exist`));
+    }
+    await newComponent(dirname)
+});
+
+// 如果输入没有注册的命令,输出帮助提示
 program.arguments('<command>').action(cmd => {
-program.outputHelp();
-console.log(' ');
-console.log(`error: unknown option '${cmd}'`);
+  program.outputHelp();
+  console.log(' ');
+  console.log(`error: unknown option '${cmd}'`);
 });
 program.parse(process.argv);
 // 如果没写参数,输出帮助提示
 if (!process.argv.slice(2).length) {
-program.outputHelp();
+  program.outputHelp();
 }
 
 
