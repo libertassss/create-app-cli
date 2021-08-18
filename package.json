@@ -1,6 +1,6 @@
 {
   "name": "super-zyy-cli",
-  "version": "1.0.17",
+  "version": "1.0.18",
   "description": "第一个cli",
   "main": "main.js",
   "bin": {
